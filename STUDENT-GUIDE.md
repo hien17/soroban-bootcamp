@@ -25,6 +25,8 @@
 ## Before the Session (Do This at Home)
 
 > Budget ~30 minutes the night before. This saves you from wasting session time on installation.
+>
+> Full setup reference: [Stellar Docs — Getting Started](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup)
 
 ### 1. Install Rust
 

@@ -52,6 +52,8 @@ soroban-bootcamp/
 
 ### 1. Set Up Environment
 
+> Full setup guide: [Stellar Docs — Getting Started](https://developers.stellar.org/docs/build/smart-contracts/getting-started/setup)
+
 ```bash
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
