@@ -17,7 +17,7 @@ It targets students with zero to intermediate blockchain knowledge.
 - **Smart Contracts**: Rust → WebAssembly (Soroban SDK v22)
 - **Frontend**: TypeScript/JavaScript with @stellar/stellar-sdk
 - **Wallet**: Freighter browser extension
-- **Networks**: Futurenet (development), Testnet (staging), Mainnet (production)
+- **Networks**: Testnet (development/default), Futurenet (experimental), Mainnet (production)
 - **CLI**: Stellar CLI v25+
 
 ## Key Commands
@@ -29,21 +29,21 @@ stellar contract build
 # Run tests
 cargo test
 
-# Deploy to futurenet
+# Deploy to testnet
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/<contract>.wasm \
   --source-account <identity> \
-  --network futurenet
+  --network testnet
 
 # Invoke a contract function
 stellar contract invoke \
   --id <CONTRACT_ID> \
   --source-account <identity> \
-  --network futurenet \
+  --network testnet \
   -- <function_name> --arg1 value1
 
 # Generate a funded test identity
-stellar keys generate <name> --network futurenet --fund
+stellar keys generate <name> --network testnet --fund
 ```
 
 ## Soroban Contract Conventions
@@ -61,5 +61,5 @@ stellar keys generate <name> --network futurenet --fund
 - Always explain WHY, not just HOW
 - Provide complete, runnable code — not fragments
 - Always include test code alongside contract code
-- Default to Futurenet for deployment examples
+- Default to Testnet for deployment examples
 - Reference the relevant `modules/` folder for deeper explanation

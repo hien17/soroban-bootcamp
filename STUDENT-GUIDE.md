@@ -14,7 +14,7 @@
 - [Part 1: Understand the Basics](#part-1-understand-the-basics)
 - [Part 2: Choose Your Project Idea](#part-2-choose-your-project-idea)
 - [Part 3: Write Your Smart Contract](#part-3-write-your-smart-contract)
-- [Part 4: Deploy to Stellar Futurenet](#part-4-deploy-to-stellar-futurenet)
+- [Part 4: Deploy to Stellar Testnet](#part-4-deploy-to-stellar-testnet)
 - [Part 5: Build Your Frontend (Optional)](#part-5-build-your-frontend-optional)
 - [Part 6: Submit Your Project](#part-6-submit-your-project)
 - [After the Session](#after-the-session)
@@ -83,10 +83,10 @@ Freighter is the browser wallet for Stellar — like MetaMask but for Stellar.
 1. Go to [freighter.app](https://freighter.app)
 2. Click "Add to Chrome" (works on Chrome, Brave, Firefox)
 3. Create a new wallet — **write down your recovery phrase and keep it safe!**
-4. Switch to **Futurenet** network:
+4. Switch to **Testnet** network:
    - Open Freighter → click the gear icon
    - Go to Network Settings
-   - Select **Futurenet**
+   - Select **Testnet**
 
 ### 6. Install VS Code + Extensions
 
@@ -113,7 +113,7 @@ node --version      # ✓ Node.js installed
 ```
 
 And confirm:
-- [ ] Freighter wallet installed and switched to **Futurenet**
+- [ ] Freighter wallet installed and switched to **Testnet**
 - [ ] VS Code with rust-analyzer extension
 - [ ] This repo cloned on your machine
 
@@ -159,8 +159,8 @@ Soroban is Stellar's smart contract platform. You write contracts in **Rust**, c
 | **Transaction (tx)** | An action recorded on-chain | API request |
 | **Contract** | Code deployed on the blockchain | Backend server logic |
 | **Token** | A digital asset on-chain | Database record of ownership |
-| **Futurenet** | Stellar's testing playground (free fake money) | Staging server |
-| **Testnet** | Stellar's pre-production network | QA environment |
+| **Testnet** | Stellar's default testing network (free fake money) | Staging server |
+| **Futurenet** | Stellar's experimental/cutting-edge network | Dev playground |
 | **Gas/Fee** | Cost to process your transaction | API call cost |
 | **Friendbot** | Free faucet that gives you test XLM | "Get free credits" button |
 
@@ -669,7 +669,7 @@ Before moving on, make sure you understand these 4 things:
 
 ---
 
-## Part 4: Deploy to Stellar Futurenet
+## Part 4: Deploy to Stellar Testnet
 
 > Goal: Get a **contract ID** and at least **1 transaction hash**. This is your proof of work.
 
@@ -677,7 +677,7 @@ Before moving on, make sure you understand these 4 things:
 
 ```bash
 # Generate a new identity and automatically fund it with test XLM
-stellar keys generate student --network futurenet --fund
+stellar keys generate student --network testnet --fund
 
 # Check your address
 stellar keys address student
@@ -685,15 +685,15 @@ stellar keys address student
 
 > If `--fund` doesn't work, fund manually:
 > ```bash
-> curl "https://friendbot-futurenet.stellar.org/?addr=$(stellar keys address student)"
+> curl "https://friendbot.stellar.org/?addr=$(stellar keys address student)"
 > ```
 
-### Step 2: Add Futurenet Network (one-time)
+### Step 2: Add Testnet Network (one-time)
 
 ```bash
-stellar network add futurenet \
-  --rpc-url https://rpc-futurenet.stellar.org \
-  --network-passphrase "Test SDF Future Network ; October 2022"
+stellar network add testnet \
+  --rpc-url https://soroban-testnet.stellar.org \
+  --network-passphrase "Test SDF Network ; September 2015"
 ```
 
 ### Step 3: Deploy Your Contract
@@ -702,7 +702,7 @@ stellar network add futurenet \
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/my_project.wasm \
   --source-account student \
-  --network futurenet
+  --network testnet
 ```
 
 **Output: `CABC123...`** — This is your **CONTRACT_ID**. Save it!
@@ -714,7 +714,7 @@ stellar contract deploy \
 stellar contract invoke \
   --id YOUR_CONTRACT_ID \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- initialize \
   --admin $(stellar keys address student) \
   --name "My Token" \
@@ -724,7 +724,7 @@ stellar contract invoke \
 stellar contract invoke \
   --id YOUR_CONTRACT_ID \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- mint \
   --to $(stellar keys address student) \
   --amount 1000
@@ -734,7 +734,7 @@ stellar contract invoke \
 
 ### Step 5: Verify on Stellar Expert
 
-1. Open [stellar.expert/explorer/futurenet](https://stellar.expert/explorer/futurenet)
+1. Open [stellar.expert/explorer/testnet](https://stellar.expert/explorer/testnet)
 2. Paste your **contract ID** in the search bar
 3. You should see your contract and its transactions
 4. Click on a transaction to get the **transaction hash**
@@ -744,7 +744,7 @@ stellar contract invoke \
 
 | Error | Fix |
 |-------|-----|
-| `Account not found` | Fund your account: `curl "https://friendbot-futurenet.stellar.org/?addr=$(stellar keys address student)"` |
+| `Account not found` | Fund your account: `curl "https://friendbot.stellar.org/?addr=$(stellar keys address student)"` |
 | `tx_bad_seq` | Wait 5 seconds, try again |
 | `simulation failed` | Your contract has a bug — run `cargo test` first |
 | `op_underfunded` | Fund your account again with Friendbot |
@@ -793,8 +793,8 @@ import * as StellarSdk from "@stellar/stellar-sdk";
 import { isConnected, getAddress, signTransaction } from "@stellar/freighter-api";
 
 const CONTRACT_ID = "YOUR_CONTRACT_ID_HERE"; // from deploy step
-const RPC_URL = "https://rpc-futurenet.stellar.org";
-const NETWORK_PASSPHRASE = "Test SDF Future Network ; October 2022";
+const RPC_URL = "https://soroban-testnet.stellar.org";
+const NETWORK_PASSPHRASE = "Test SDF Network ; September 2015";
 
 // Connect wallet
 async function connectWallet() {
@@ -841,8 +841,8 @@ async function callContract(funcName, ...args) {
 | **Developer info** | Telegram, Gmail, 1 line about you | @yourname \| you@gmail.com \| HCMUT CS Year 2 |
 | **Project description** | 1 paragraph: problem + solution + why Stellar | "CampusCoin helps students earn loyalty tokens..." |
 | **GitHub link** | Public repo with README | `https://github.com/yourname/campus-coin` |
-| **Contract ID** | Your deployed contract on Futurenet | `CABC123...` |
-| **Transaction link** | At least 1 tx on Stellar Expert | `https://stellar.expert/explorer/futurenet/tx/abc123...` |
+| **Contract ID** | Your deployed contract on Testnet | `CABC123...` |
+| **Transaction link** | At least 1 tx on Stellar Expert | `https://stellar.expert/explorer/testnet/tx/abc123...` |
 
 ### Step-by-Step
 
@@ -853,7 +853,7 @@ cd your-project-folder
 
 git init
 git add -A
-git commit -m "Initial commit: [project name] on Stellar Futurenet"
+git commit -m "Initial commit: [project name] on Stellar Testnet"
 
 # Create repo on GitHub (github.com → New Repository)
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
@@ -883,23 +883,23 @@ Use this template — copy it into your repo's `README.md`:
 [Who is this for?]
 
 ## Live Demo
-- **Network**: Stellar Futurenet
+- **Network**: Stellar Testnet
 - **Contract ID**: `CABC123...`
-- **Transaction**: https://stellar.expert/explorer/futurenet/tx/YOUR_TX_HASH
+- **Transaction**: https://stellar.expert/explorer/testnet/tx/YOUR_TX_HASH
 
 ## How to Run
 
 1. Clone: `git clone https://github.com/yourname/project.git`
 2. Build: `cd contracts/my-project && stellar contract build`
 3. Test: `cargo test`
-4. Deploy: `stellar contract deploy --wasm target/wasm32-unknown-unknown/release/my_project.wasm --source-account student --network futurenet`
+4. Deploy: `stellar contract deploy --wasm target/wasm32-unknown-unknown/release/my_project.wasm --source-account student --network testnet`
 5. Frontend: `cd frontend && npx serve .`
 
 ## Tech Stack
 - Smart Contract: Rust / Soroban SDK v22
 - Frontend: HTML / JavaScript / @stellar/stellar-sdk
 - Wallet: Freighter
-- Network: Stellar Futurenet
+- Network: Stellar Testnet
 
 ## Team
 - [Your Name] | [@telegram] | [email] | [university + year]
@@ -925,7 +925,7 @@ The submission link will be shared by Rise In or DevRel during the session. Fill
 
 | | Milestone 1 (Today) | Milestone 2 (2 weeks) |
 |---|---|---|
-| **Requirement** | GitHub repo + 1 tx hash on Futurenet | Full demo + README + 2-min video |
+| **Requirement** | GitHub repo + 1 tx hash on Testnet | Full demo + README + 2-min video |
 | **Support** | DevRel in person | Community group + async mentorship |
 
 ### Milestone 2 — What To Do Next
@@ -979,7 +979,7 @@ After the session, you'll be invited to the builder community group. Here you ca
 | `stellar` command not found | Run: `cargo install --locked stellar-cli` |
 | Build fails | Read the error — Rust errors tell you the exact line. Check [`modules/07-common-errors/`](modules/07-common-errors/) |
 | Deploy fails | Fund your account with Friendbot, then retry |
-| Freighter won't connect | Make sure you're on **Futurenet** network in Freighter settings |
+| Freighter won't connect | Make sure you're on **Testnet** network in Freighter settings |
 | Don't know what to build | Pick any idea from the list above. The simplest one is fine. |
 | Running out of time | Deploy the starter contract as-is — 1 tx hash = 1 KPI |
 
@@ -997,7 +997,7 @@ You can use Claude Code, ChatGPT, or Copilot to accelerate your development. The
 
 - **NEVER share your private/secret key** — not in code, not in chat, not on GitHub
 - **Add `.env` to `.gitignore`** before your first commit
-- **Use Futurenet/Testnet** for development — never deploy untested code to Mainnet
+- **Use Testnet/Futurenet** for development — never deploy untested code to Mainnet
 - **Private keys in code = leaked funds** — always use environment variables
 
 ---

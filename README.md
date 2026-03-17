@@ -83,17 +83,17 @@ stellar contract build
 cargo test
 ```
 
-### 4. Deploy to Futurenet
+### 4. Deploy to Testnet
 
 ```bash
 # Create and fund a test account
-stellar keys generate student --network futurenet --fund
+stellar keys generate student --network testnet --fund
 
 # Deploy
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/hello_world.wasm \
   --source-account student \
-  --network futurenet
+  --network testnet
 ```
 
 ### 5. Build a Full dApp
@@ -110,7 +110,7 @@ Read [scaffold/README.md](scaffold/README.md) to set up a full-stack project wit
 | 4 | CRUD operations | 20 min | `modules/02-crud-operations/` |
 | 5 | Token operations | 20 min | `modules/03-token-operations/` |
 | 6 | Auth patterns | 15 min | `modules/05-auth-patterns/` |
-| 7 | Deploy to futurenet | 15 min | `modules/06-deploy-guide/` |
+| 7 | Deploy to testnet | 15 min | `modules/06-deploy-guide/` |
 | 8 | Build full dApp | 60 min | `scaffold/` + `skills/` |
 
 ## Using AI to Accelerate Development

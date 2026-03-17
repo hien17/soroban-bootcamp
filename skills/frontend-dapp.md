@@ -21,17 +21,17 @@ npm install @stellar/stellar-sdk @stellar/freighter-api
 ```javascript
 // networks.js
 export const NETWORKS = {
-  futurenet: {
-    rpcUrl: "https://rpc-futurenet.stellar.org",
-    passphrase: "Test SDF Future Network ; October 2022",
-    explorerUrl: "https://stellar.expert/explorer/futurenet",
-    friendbotUrl: "https://friendbot-futurenet.stellar.org",
-  },
   testnet: {
     rpcUrl: "https://soroban-testnet.stellar.org",
     passphrase: "Test SDF Network ; September 2015",
     explorerUrl: "https://stellar.expert/explorer/testnet",
     friendbotUrl: "https://friendbot.stellar.org",
+  },
+  futurenet: {
+    rpcUrl: "https://rpc-futurenet.stellar.org",
+    passphrase: "Test SDF Future Network ; October 2022",
+    explorerUrl: "https://stellar.expert/explorer/futurenet",
+    friendbotUrl: "https://friendbot-futurenet.stellar.org",
   },
   mainnet: {
     rpcUrl: "https://mainnet.sorobanrpc.com",
@@ -40,7 +40,7 @@ export const NETWORKS = {
   },
 };
 
-export const NETWORK = NETWORKS.futurenet; // Change for different environments
+export const NETWORK = NETWORKS.testnet; // Default to testnet for development
 ```
 
 ## Wallet Connection
@@ -81,7 +81,7 @@ import {
 } from "@creit.tech/stellar-wallets-kit";
 
 const kit = new StellarWalletsKit({
-  network: WalletNetwork.FUTURENET,
+  network: WalletNetwork.TESTNET,
   selectedWalletId: FREIGHTER_ID,
   modules: allowAllModules(),
 });

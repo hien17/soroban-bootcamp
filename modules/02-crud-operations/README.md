@@ -92,14 +92,14 @@ cargo test
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/crud_contract.wasm \
   --source-account student \
-  --network futurenet
+  --network testnet
 
 # Create a record
-stellar contract invoke --id <CONTRACT_ID> --source-account student --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account student --network testnet \
   -- create --caller <YOUR_ADDRESS> --title "Hello" --content "My first record"
 
 # Read it back
-stellar contract invoke --id <CONTRACT_ID> --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --network testnet \
   -- read --id 1
 ```
 

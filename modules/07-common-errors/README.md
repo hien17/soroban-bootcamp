@@ -42,7 +42,7 @@ lto = true               # Link-time optimization
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `Account not found` | Account not funded on this network | Run Friendbot: `curl "https://friendbot-futurenet.stellar.org/?addr=YOUR_KEY"` |
+| `Account not found` | Account not funded on this network | Run Friendbot: `curl "https://friendbot.stellar.org/?addr=YOUR_KEY"` |
 | `op_underfunded` | Not enough XLM for fees + min balance | Fund account again with Friendbot |
 | `tx_bad_seq` | Sequence number out of sync | Wait 5 seconds, retry |
 | `Transaction simulation failed` | Contract has a bug | Run `cargo test` locally first |
@@ -80,7 +80,7 @@ pub enum Error {
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `Freighter not connected` | Extension not installed or wrong network | Install Freighter, switch to Futurenet |
+| `Freighter not connected` | Extension not installed or wrong network | Install Freighter, switch to Testnet |
 | `Account not found` (SDK) | Account not funded | Run Friendbot |
 | `prepareTransaction failed` | Contract simulation error | Check contract ID is correct |
 | `signTransaction failed` | User rejected in Freighter | User must click Approve |
@@ -102,7 +102,7 @@ pub enum Error {
 ```
 1. cargo test           ← catch logic bugs locally
 2. stellar contract build  ← catch compile errors
-3. Deploy to futurenet     ← catch network issues
+3. Deploy to testnet       ← catch network issues
 4. Check Stellar Expert    ← verify tx went through
 5. Check Stellar Lab       ← decode XDR if needed
 ```

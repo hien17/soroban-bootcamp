@@ -1,6 +1,6 @@
 # Module 06 — Deploy Guide
 
-> Step-by-step deployment to Stellar Futurenet and Testnet.
+> Step-by-step deployment to Stellar Testnet (default) and Futurenet.
 
 ## Overview
 
@@ -34,8 +34,8 @@ stellar contract optimize \
 
 ### Option A: CLI-managed identity (recommended for students)
 ```bash
-# Generate identity + auto-fund on futurenet
-stellar keys generate student --network futurenet --fund
+# Generate identity + auto-fund on testnet (default)
+stellar keys generate student --network testnet --fund
 
 # Check your address
 stellar keys address student
@@ -48,26 +48,26 @@ stellar keys add student --secret-key
 # Paste your secret key when prompted
 
 # Fund via Friendbot
-curl "https://friendbot-futurenet.stellar.org/?addr=$(stellar keys address student)"
+curl "https://friendbot.stellar.org/?addr=$(stellar keys address student)"
 ```
 
-### Option C: For testnet
+### Option C: For futurenet (experimental)
 ```bash
-stellar keys generate student --network testnet --fund
+stellar keys generate student --network futurenet --fund
 ```
 
 ## Step 3: Add Network (one-time setup)
 
 ```bash
-# Futurenet
-stellar network add futurenet \
-  --rpc-url https://rpc-futurenet.stellar.org \
-  --network-passphrase "Test SDF Future Network ; October 2022"
-
-# Testnet
+# Testnet (default for development)
 stellar network add testnet \
   --rpc-url https://soroban-testnet.stellar.org \
   --network-passphrase "Test SDF Network ; September 2015"
+
+# Futurenet (experimental)
+stellar network add futurenet \
+  --rpc-url https://rpc-futurenet.stellar.org \
+  --network-passphrase "Test SDF Future Network ; October 2022"
 ```
 
 ## Step 4: Deploy
@@ -76,7 +76,7 @@ stellar network add testnet \
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/your_contract.wasm \
   --source-account student \
-  --network futurenet
+  --network testnet
 
 # Output: CAAAAAAA... (your CONTRACT_ID)
 # SAVE THIS! You need it for every invocation.
@@ -87,7 +87,7 @@ stellar contract deploy \
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/your_contract.wasm \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   --alias my-contract
 ```
 
@@ -98,7 +98,7 @@ stellar contract deploy \
 stellar contract invoke \
   --id <CONTRACT_ID> \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- \
   function_name \
   --arg1 value1 \
@@ -114,30 +114,30 @@ stellar contract invoke \
 stellar contract invoke \
   --id CABC123... \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- hello --to World
 
 # Set a value
 stellar contract invoke \
   --id CABC123... \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- set_value --key "test" --value 42
 
 # Read a value (no source needed for read-only)
 stellar contract invoke \
   --id CABC123... \
-  --network futurenet \
+  --network testnet \
   -- get_value --key "test"
 ```
 
 ## Step 6: Verify on Block Explorer
 
-1. Go to [Stellar Expert](https://stellar.expert/explorer/futurenet)
+1. Go to [Stellar Expert](https://stellar.expert/explorer/testnet)
 2. Paste your contract ID or transaction hash
 3. You should see your contract and its transactions
 
-For testnet: [stellar.expert/explorer/testnet](https://stellar.expert/explorer/testnet)
+For futurenet: [stellar.expert/explorer/futurenet](https://stellar.expert/explorer/futurenet)
 
 ## Quick Reference: Complete Flow
 
@@ -146,13 +146,13 @@ For testnet: [stellar.expert/explorer/testnet](https://stellar.expert/explorer/t
 stellar contract build
 
 # 2. Generate + fund identity
-stellar keys generate student --network futurenet --fund
+stellar keys generate student --network testnet --fund
 
 # 3. Deploy
 CONTRACT_ID=$(stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/your_contract.wasm \
   --source-account student \
-  --network futurenet)
+  --network testnet)
 
 echo "Deployed: $CONTRACT_ID"
 
@@ -160,23 +160,23 @@ echo "Deployed: $CONTRACT_ID"
 stellar contract invoke \
   --id $CONTRACT_ID \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- your_function --your_arg "value"
 
 # 5. Verify
-echo "View on explorer: https://stellar.expert/explorer/futurenet/contract/$CONTRACT_ID"
+echo "View on explorer: https://stellar.expert/explorer/testnet/contract/$CONTRACT_ID"
 ```
 
 ## Network Comparison
 
-| | Futurenet | Testnet | Mainnet |
-|---|-----------|---------|---------|
-| **Purpose** | Experimental / learning | Pre-production testing | Real money |
-| **Stability** | May reset | Stable | Permanent |
+| | Testnet | Futurenet | Mainnet |
+|---|---------|-----------|---------|
+| **Purpose** | Default development & testing | Experimental features | Real money |
+| **Stability** | Stable | May reset | Permanent |
 | **Free tokens** | Yes (Friendbot) | Yes (Friendbot) | No |
-| **Use for** | Bootcamp, learning | Staging, testing | Production |
-| **RPC URL** | `rpc-futurenet.stellar.org` | `soroban-testnet.stellar.org` | `mainnet.sorobanrpc.com` |
-| **Explorer** | stellar.expert/futurenet | stellar.expert/testnet | stellar.expert/public |
+| **Use for** | Bootcamp, learning, staging | Cutting-edge experiments | Production |
+| **RPC URL** | `soroban-testnet.stellar.org` | `rpc-futurenet.stellar.org` | `mainnet.sorobanrpc.com` |
+| **Explorer** | stellar.expert/testnet | stellar.expert/futurenet | stellar.expert/public |
 
 ## Troubleshooting
 

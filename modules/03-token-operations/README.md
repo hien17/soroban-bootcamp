@@ -51,10 +51,10 @@ Token State:
 # Deploy
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/simple_token.wasm \
-  --source-account student --network futurenet
+  --source-account student --network testnet
 
 # Initialize token
-stellar contract invoke --id <CONTRACT_ID> --source-account student --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account student --network testnet \
   -- initialize \
   --admin <YOUR_ADDRESS> \
   --name "Campus Coin" \
@@ -64,20 +64,20 @@ stellar contract invoke --id <CONTRACT_ID> --source-account student --network fu
 
 ### Mint Tokens
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --source-account student --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account student --network testnet \
   -- mint --to <RECIPIENT_ADDRESS> --amount 1000000000
 # 1000000000 = 100 tokens with 7 decimals
 ```
 
 ### Transfer Tokens
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --source-account student --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account student --network testnet \
   -- transfer --from <YOUR_ADDRESS> --to <RECIPIENT> --amount 500000000
 ```
 
 ### Check Balance
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --network testnet \
   -- balance --id <ADDRESS>
 ```
 

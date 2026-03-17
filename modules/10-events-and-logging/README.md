@@ -126,13 +126,13 @@ cargo build --target wasm32-unknown-unknown --profile release-with-logs
 ```bash
 stellar events list \
   --id <CONTRACT_ID> \
-  --network futurenet \
+  --network testnet \
   --start-ledger 0
 ```
 
 ### From RPC
 ```bash
-curl -s https://rpc-futurenet.stellar.org \
+curl -s https://soroban-testnet.stellar.org \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{

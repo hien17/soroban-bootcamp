@@ -54,7 +54,7 @@ pub fn upgrade(env: Env, new_wasm_hash: BytesN<32>) {
 stellar contract install \
   --wasm target/wasm32-unknown-unknown/release/my_contract_v2.wasm \
   --source-account admin \
-  --network futurenet
+  --network testnet
 
 # Output: NEW_WASM_HASH (a hex string)
 ```
@@ -65,7 +65,7 @@ stellar contract install \
 stellar contract invoke \
   --id <EXISTING_CONTRACT_ID> \
   --source-account admin \
-  --network futurenet \
+  --network testnet \
   -- upgrade \
   --new_wasm_hash <NEW_WASM_HASH>
 ```
@@ -112,7 +112,7 @@ pub fn migrate(env: Env) {
 ## Security Considerations
 
 - **Always gate upgrades with admin auth** — otherwise anyone can replace your contract
-- **Test the upgrade flow** on futurenet before mainnet
+- **Test the upgrade flow** on testnet before mainnet
 - **Consider a timelock** — delay upgrades by X hours so users can review
 - **Emit events** on upgrade so monitoring systems can alert
 

@@ -15,12 +15,12 @@ stellar contract build
 # Run its tests
 cargo test
 
-# Deploy to futurenet
-stellar keys generate student --network futurenet --fund
+# Deploy to testnet
+stellar keys generate student --network testnet --fund
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/hello_world.wasm \
   --source-account student \
-  --network futurenet
+  --network testnet
 ```
 
 ## Examples by Learning Level

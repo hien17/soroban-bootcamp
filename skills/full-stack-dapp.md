@@ -9,7 +9,7 @@
 00:00-05:00  Project setup + scaffold
 05:00-20:00  Smart contract (Rust)
 20:00-30:00  Tests
-30:00-35:00  Deploy to Futurenet
+30:00-35:00  Deploy to Testnet
 35:00-50:00  Frontend (HTML/JS)
 50:00-55:00  Connect frontend to contract
 55:00-60:00  Verify on Stellar Expert + push to GitHub
@@ -72,7 +72,7 @@ EOF
 
 ### Generate identity
 ```bash
-stellar keys generate student --network futurenet --fund
+stellar keys generate student --network testnet --fund
 ```
 
 ## Phase 2: Smart Contract (15 min)
@@ -300,7 +300,7 @@ stellar contract build
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/my_contract.wasm \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   --alias my-contract
 
 # Note the CONTRACT_ID output!
@@ -309,7 +309,7 @@ stellar contract deploy \
 stellar contract invoke \
   --id my-contract \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- your_function --arg value
 ```
 
@@ -325,7 +325,7 @@ and add contract calls in `app.js`.
 
 ### Verify on Stellar Expert
 ```bash
-echo "https://stellar.expert/explorer/futurenet/contract/$(stellar contract id --alias my-contract --network futurenet)"
+echo "https://stellar.expert/explorer/testnet/contract/$(stellar contract id --alias my-contract --network testnet)"
 ```
 
 ### Push to GitHub
@@ -352,14 +352,14 @@ git push -u origin main
 [Which Stellar feature you used: fast payments / tokenization / built-in DEX / low fees]
 
 ## Live Demo
-- Network: Stellar Futurenet
+- Network: Stellar Testnet
 - Contract ID: `CAAA...`
-- Transaction: [View on Stellar Expert](https://stellar.expert/explorer/futurenet/tx/HASH)
+- Transaction: [View on Stellar Expert](https://stellar.expert/explorer/testnet/tx/HASH)
 
 ## How to Run
 1. Clone: `git clone [url]`
 2. Build: `stellar contract build`
-3. Deploy: `stellar contract deploy --wasm ... --network futurenet`
+3. Deploy: `stellar contract deploy --wasm ... --network testnet`
 4. Frontend: `cd frontend && npx serve .`
 
 ## Tech Stack

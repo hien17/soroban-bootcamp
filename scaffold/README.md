@@ -114,14 +114,14 @@ Edit `environments.toml` to configure networks:
 
 ```toml
 [development]
-name = "futurenet"
+name = "testnet"
 accounts = ["student"]
 
 [development.contracts.hello_world]
 client = true
 
 [staging]
-name = "testnet"
+name = "futurenet"
 accounts = [{ name = "deployer", default = true }]
 
 [staging.contracts.hello_world]

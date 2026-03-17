@@ -9,35 +9,35 @@
 stellar contract build
 
 # 2. Create identity (one-time)
-stellar keys generate deployer --network futurenet --fund
+stellar keys generate deployer --network testnet --fund
 
 # 3. Deploy
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/CONTRACT_NAME.wasm \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   --alias my-contract
 
 # 4. Invoke
 stellar contract invoke \
   --id my-contract \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   -- function_name --arg1 value1
 ```
 
 ## Network Setup (one-time)
 
 ```bash
-# Futurenet
-stellar network add futurenet \
-  --rpc-url https://rpc-futurenet.stellar.org \
-  --network-passphrase "Test SDF Future Network ; October 2022"
-
-# Testnet
+# Testnet (default for development)
 stellar network add testnet \
   --rpc-url https://soroban-testnet.stellar.org \
   --network-passphrase "Test SDF Network ; September 2015"
+
+# Futurenet (experimental)
+stellar network add futurenet \
+  --rpc-url https://rpc-futurenet.stellar.org \
+  --network-passphrase "Test SDF Future Network ; October 2022"
 ```
 
 ## Identity Management
@@ -59,11 +59,11 @@ stellar keys add NAME --secret-key
 ## Fund Account
 
 ```bash
+# Testnet (default)
+curl "https://friendbot.stellar.org/?addr=$(stellar keys address NAME)"
+
 # Futurenet
 curl "https://friendbot-futurenet.stellar.org/?addr=$(stellar keys address NAME)"
-
-# Testnet
-curl "https://friendbot.stellar.org/?addr=$(stellar keys address NAME)"
 ```
 
 ## Build Commands
@@ -90,20 +90,20 @@ ls -lh target/wasm32-unknown-unknown/release/*.wasm
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/my_contract.wasm \
   --source-account deployer \
-  --network futurenet
+  --network testnet
 
 # Deploy with alias (easier to reference later)
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/my_contract.wasm \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   --alias my-contract
 
 # Deploy with constructor args
 stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/my_contract.wasm \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   -- --admin $(stellar keys address deployer)
 ```
 
@@ -114,20 +114,20 @@ stellar contract deploy \
 stellar contract invoke \
   --id CONTRACT_ID_OR_ALIAS \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   -- function_name --arg1 value1
 
 # Read-only (no source needed, simulated locally)
 stellar contract invoke \
   --id CONTRACT_ID \
-  --network futurenet \
+  --network testnet \
   -- get_value --key "test"
 
 # Dry-run (simulate without submitting)
 stellar contract invoke \
   --id CONTRACT_ID \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   --send no \
   -- my_function --arg value
 ```
@@ -157,17 +157,17 @@ stellar contract invoke \
 # View contract interface (functions + types)
 stellar contract info interface \
   --id CONTRACT_ID \
-  --network futurenet
+  --network testnet
 
 # Fetch deployed WASM
 stellar contract fetch \
   --id CONTRACT_ID \
-  --network futurenet > contract.wasm
+  --network testnet > contract.wasm
 
 # Read contract storage
 stellar contract read \
   --id CONTRACT_ID \
-  --network futurenet
+  --network testnet
 ```
 
 ## Upgrade Flow
@@ -180,14 +180,14 @@ stellar contract build
 stellar contract install \
   --wasm target/wasm32-unknown-unknown/release/my_contract_v2.wasm \
   --source-account deployer \
-  --network futurenet
+  --network testnet
 # Output: NEW_WASM_HASH
 
 # 3. Call upgrade on existing contract
 stellar contract invoke \
   --id EXISTING_CONTRACT_ID \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   -- upgrade --new_wasm_hash NEW_WASM_HASH
 ```
 
@@ -198,14 +198,14 @@ stellar contract invoke \
 stellar contract extend \
   --id CONTRACT_ID \
   --source-account deployer \
-  --network futurenet \
+  --network testnet \
   --ledgers-to-extend 518400  # ~30 days
 
 # Restore expired data
 stellar contract restore \
   --id CONTRACT_ID \
   --source-account deployer \
-  --network futurenet
+  --network testnet
 ```
 
 ## Scaffold Stellar (Full-Stack)
@@ -244,8 +244,8 @@ stellar scaffold generate contract --from token
 
 ```bash
 # View on Stellar Expert
-echo "https://stellar.expert/explorer/futurenet/contract/$CONTRACT_ID"
+echo "https://stellar.expert/explorer/testnet/contract/$CONTRACT_ID"
 
 # View transaction
-echo "https://stellar.expert/explorer/futurenet/tx/$TX_HASH"
+echo "https://stellar.expert/explorer/testnet/tx/$TX_HASH"
 ```

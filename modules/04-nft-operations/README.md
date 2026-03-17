@@ -31,7 +31,7 @@ See [src/lib.rs](src/lib.rs) for the complete code.
 
 ### Mint an NFT
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --source-account admin --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account admin --network testnet \
   -- mint \
   --to <RECIPIENT_ADDRESS> \
   --name "My Art #1" \
@@ -41,7 +41,7 @@ stellar contract invoke --id <CONTRACT_ID> --source-account admin --network futu
 
 ### Transfer
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --source-account owner --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --source-account owner --network testnet \
   -- transfer \
   --from <OWNER_ADDRESS> \
   --to <NEW_OWNER> \
@@ -50,7 +50,7 @@ stellar contract invoke --id <CONTRACT_ID> --source-account owner --network futu
 
 ### Check Owner
 ```bash
-stellar contract invoke --id <CONTRACT_ID> --network futurenet \
+stellar contract invoke --id <CONTRACT_ID> --network testnet \
   -- owner_of --token_id 1
 ```
 

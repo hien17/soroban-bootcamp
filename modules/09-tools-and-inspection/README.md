@@ -10,8 +10,8 @@
 
 | Network | URL |
 |---------|-----|
-| Futurenet | `https://stellar.expert/explorer/futurenet` |
 | Testnet | `https://stellar.expert/explorer/testnet` |
+| Futurenet | `https://stellar.expert/explorer/futurenet` |
 | Mainnet | `https://stellar.expert/explorer/public` |
 
 **How to use:**
@@ -36,15 +36,15 @@
 
 ```bash
 # Check contract info
-stellar contract info interface --id <CONTRACT_ID> --network futurenet
+stellar contract info interface --id <CONTRACT_ID> --network testnet
 
 # Fetch a deployed contract's WASM
-stellar contract fetch --id <CONTRACT_ID> --network futurenet > contract.wasm
+stellar contract fetch --id <CONTRACT_ID> --network testnet > contract.wasm
 
 # Read contract data directly
 stellar contract read \
   --id <CONTRACT_ID> \
-  --network futurenet \
+  --network testnet \
   --key <KEY>
 
 # Restore expired persistent data
@@ -52,7 +52,7 @@ stellar contract restore \
   --id <CONTRACT_ID> \
   --key <KEY> \
   --source-account student \
-  --network futurenet
+  --network testnet
 ```
 
 ### 4. Freighter Wallet
@@ -64,31 +64,31 @@ stellar contract restore \
 **Setup for development:**
 1. Install extension
 2. Create/import account
-3. Switch to Futurenet (Settings → Network)
+3. Switch to Testnet (Settings → Network)
 4. Fund via Friendbot
 
 **Debugging tips:**
 - Check "Recent transactions" in Freighter to see what was signed
-- Make sure network matches (Futurenet vs Testnet)
+- Make sure network matches (Testnet vs Futurenet)
 - Check if the account has enough XLM for fees
 
 ### 5. Soroban RPC (direct API)
 
 ```bash
 # Health check
-curl -s https://rpc-futurenet.stellar.org \
+curl -s https://soroban-testnet.stellar.org \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"getHealth"}' | jq
 
 # Get latest ledger
-curl -s https://rpc-futurenet.stellar.org \
+curl -s https://soroban-testnet.stellar.org \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"getLatestLedger"}' | jq
 
 # Get contract data
-curl -s https://rpc-futurenet.stellar.org \
+curl -s https://soroban-testnet.stellar.org \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -118,14 +118,14 @@ cargo test -- --nocapture  # See println! output
 stellar contract invoke \
   --id <CONTRACT_ID> \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   -- your_function --arg value
 
 # Dry-run (simulate without submitting)
 stellar contract invoke \
   --id <CONTRACT_ID> \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   --send no \
   -- your_function --arg value
 ```
@@ -146,7 +146,7 @@ stellar contract invoke \
 ### Watch for events
 ```bash
 # Get recent events from your contract
-curl -s https://rpc-futurenet.stellar.org \
+curl -s https://soroban-testnet.stellar.org \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{
@@ -171,7 +171,7 @@ Monitor TTL and extend when needed:
 stellar contract extend \
   --id <CONTRACT_ID> \
   --source-account student \
-  --network futurenet \
+  --network testnet \
   --ledgers-to-extend 518400  # ~30 days
 ```
 
